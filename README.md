@@ -1,0 +1,2 @@
+# ucm.sig.santiagomap
+El propósito general del proyecto será analizar un conjunto de fotografías geolocalizadas obtenidas de la red social Flickr y todas ellas tomadas en el camino de Santiago español. A partir de esta información analizaremos el contenido visual de cada fotografía utilizando la interface de programación de aplicaciones (API) proporcionada por Google en la herramienta Cloud Vision.
