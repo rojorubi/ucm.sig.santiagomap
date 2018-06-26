@@ -1,0 +1,11 @@
+{"responses":[{"webDetection":{"webEntities":[{"entityId":"/m/01c8br","score":0.89045376,"description":"Street"},{"entityId":"/m/033rq4","score":0.49276215,"description":"Streetlight"},{"entityId":"/m/01x314","score":0.4643754,"description":"Facade"}],"visuallySimilarImages":[{"url":"http://www.jonkerseyphotography.com/blog/wp-content/uploads/2013/11/beachstreet1.jpg"},{"url":"https://www.photocase.com/photos/168360-city-white-house-residential-structure-joy-black-photocase-stock-photo-large.jpeg"},{"url":"https://www.photocase.com/photos/824211-calm-house-residential-structure-window-wall-building-photocase-stock-photo-large.jpeg"}],"bestGuessLabels":[{"label":"urbanarea"}]}}]}
+
+
+ejecucion final para obtencion de request para enviar a google
+TOTAL= 2075
+TOTAL OK= 2036
+TOTAL KO= 38
+TOTAL Url OK= 2036
+
+
+

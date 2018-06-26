@@ -1,0 +1,21 @@
+{
+  "requests": [
+    {
+      "image": {
+        "source": {
+          "imageUri": "https://farm5.staticflickr.com/4052/4691210416_97230494ef.jpg"
+        }
+      },
+      "features": [
+        {
+          "type": "LANDMARK_DETECTION",
+          "maxResults": 1
+        },
+        {
+          "type": "WEB_DETECTION",
+          "maxResults": 3
+        }
+      ]
+    }
+  ]
+}
