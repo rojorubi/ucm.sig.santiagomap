@@ -27,10 +27,6 @@
 }
 	</style>
 	<title>Map UCM Santiago App</title>
-<!--	
-	<link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' />
-    <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
--->
 	<script src="utils.js"></script>
 	<script src="utilsGeoJsonGlobal.js"></script>
 	<script src="utilsNewPhoto.js"></script>
@@ -42,42 +38,26 @@
     <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
     <link rel="stylesheet" href="assets/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.css">
     <link rel="stylesheet" href="assets/css/app.css">
-
-	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />-->
 	<link rel="stylesheet" href="leaflet/leaflet.css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
-
-	<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-	<!--<link rel="stylesheet" href="screen.css" />--> <!-- mapa pequeño -->
 	<link rel="stylesheet" href="fullscreen.css" />
-
 	<link rel="stylesheet" href="markercluster/MarkerCluster.css" />
 	<link rel="stylesheet" href="markercluster/MarkerCluster.Default.css" />
 	<script src="markercluster/leaflet.markercluster-src.js"></script>
 	<script src="coordinates_example.js"></script>
-	<!--<script src="FileSaver.js"></script>-->
 	<script src="leaflet.ajax.min.js"></script>
 	<script src="leaflet-search.js"></script>
 	<link rel="stylesheet" href="leaflet-search.css">	
-
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
-	
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.js'></script>
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.css' rel='stylesheet' />
-
 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
-
-	<!--<script src="http://code.jquery.com/jquery-2.0.0.js" type="text/javascript" charset="utf-8"></script>-->
-
 	<!-- 3d init-->
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js"></script>
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css" rel="stylesheet" />
     <!-- 3d fin -->
-
-    
-
 	<script type="text/javascript">
 		// Initialize the Amazon Cognito credentials provider
 		AWS.config.region = 'us-east-2'; // Region
@@ -326,21 +306,7 @@
 
 		var geojsonLayer="";/*para cargar los geojson independientes*/
 		L.control.layers(baseLayers, overlays).addTo(map);
-		// or, add to an existing map:
-		//map.addControl(new L.Control.Fullscreen());
-
-		
-		
-		/*for (var i = 0; i < addressPoints.length; i++) {
-			var a = addressPoints[i];
-			var title = a[2];
-			var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
-			marker.bindPopup(title);
-			markers.addLayer(marker);
-		}*/
-
-		//addMarkerByIdPhoto("12302513465");
-
+	
 		var paramsscan = {
 		    TableName: "DATA_IMAGE_SANTIAGO"
 		};
