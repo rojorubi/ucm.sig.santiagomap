@@ -5,8 +5,8 @@ import string
 #gp= arcgisscripting.create() # obtenemos la ventana gráfica de arcgis
 import flickrapi
 import json
-api_key = 'f62de8ac68739905531c8378bfd4086b'
-secret_api_key = '520216bfefa4089f'
+api_key = 'xxx'
+secret_api_key = 'xxx'
 
 my_consts={"FIELD_LONGITUDE": "longitude",
 "FIELD_ID": "_id",
