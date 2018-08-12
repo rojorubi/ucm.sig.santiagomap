@@ -87,16 +87,6 @@ function step2_getUrlValidMediumSize(){
 
 function step3_insertRowInDynamodbAWS(){
 	console.log("STEP 3 INSERT ROW IN DYNAMODB AWS with _id:"+_id);
-	/*AWS.config.update({
-	  region: "us-east-2",
-	  // The endpoint should point to the local or remote computer where DynamoDB (downloadable) is running.
-	  endpoint: "https://dynamodb.us-east-2.amazonaws.com/DATA_IMAGE_SANTIAGO",		  
-	  //  accessKeyId and secretAccessKey defaults can be used while using the downloadable version of DynamoDB. 
-	  //  For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.		  
-	  accessKeyId: "xxxxx",
-	  secretAccessKey: "xxxx/xxxx"
-	});*/
-
 	// Initialize the Amazon Cognito credentials provider
 	AWS.config.region = 'us-east-2'; // Region
 	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -162,30 +152,7 @@ function step4_showInMapAndDownloadFileToGoogleVision(){
     };
     reader.readAsDataURL(textoblob);	
 	
-	
 	step5_uploadPhotoToS3Blob(url_download, _id+".jpeg");
-	// Initialize the Amazon Cognito credentials provider
-	/*AWS.config.region = 'us-east-2'; // Region
-	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-	    IdentityPoolId: 'us-east-2:52af5317-5a6d-40d9-bb97-f418d9be2fae',
-	});
-
-	var albumBucketName = "requestgooglecloud2";
-	var s3 = new AWS.S3({
-	  apiVersion: '2006-03-01',
-	  params: {Bucket: albumBucketName}
-	});
-	var photoKey = _id+".json";
-	  s3.upload({
-	    Key: photoKey,
-	    Body: contenidofile,
-	    ACL: 'public-read'
-	  }, function(err, data) {
-	    if (err) {
-	      return alert('There was an error uploading your photo: ', err.message);
-	    }
-	    alert('Successfully uploaded file in S3.');
-	  });*/
 	
 }
 
