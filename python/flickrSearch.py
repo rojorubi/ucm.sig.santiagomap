@@ -2,8 +2,8 @@ from flickrapi import FlickrAPI
 from pprint import pprint
 import json
 
-FLICKR_PUBLIC = 'xxx'
-FLICKR_SECRET = 'xxx'
+FLICKR_PUBLIC = 'f62de8ac68739905531c8378bfd4086b'
+FLICKR_SECRET = '520216bfefa4089f'
 
 flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format='parsed-json')
 

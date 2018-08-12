@@ -11,8 +11,8 @@ var url ="";
 var url_download ="";
 var urls_url ="--";
 
-var FLICKR_api_key = 'xxx'
-var FLICKR_secret_api_key = 'xxx'
+var FLICKR_api_key = 'f62de8ac68739905531c8378bfd4086b'
+var FLICKR_secret_api_key = '520216bfefa4089f'
 
 //recoger todos los datos que necesito para guardar en dynamodb
 //damos valor a:
@@ -28,7 +28,7 @@ function step0_checkIfIdPhotoHasLocation(){
 		_id = idPhoto;
 		id = randomString(4);
 		//{ "stat": "fail", "code": 2, "message": "Photo has no location information." }
-		var photoLocUrl2 ="https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&&api_key=xxx&photo_id="+idPhoto+"&format=json&jsoncallback=?";
+		var photoLocUrl2 ="https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&&api_key=f62de8ac68739905531c8378bfd4086b&photo_id="+idPhoto+"&format=json&jsoncallback=?";
 		$.getJSON(photoLocUrl2, function(data){
 			if(data.stat=="ok"){
 				location_l = data.photo.location.county._content + " - " + data.photo.location.region._content + " - " + data.photo.location.locality._content;
@@ -52,7 +52,7 @@ function step0_checkIfIdPhotoHasLocation(){
 //	url
 function step1_getMoreInfoNewPhoto(){
 	console.log("STEP 1 GETTING MORE INFO ABOUT PHOTO.");
-	var apiUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=xxx&photo_id=" + _id + "&format=json&jsoncallback=?";
+	var apiUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=c8c95356e465b8d7398ff2847152740e&photo_id=" + _id + "&format=json&jsoncallback=?";
       
 	$.getJSON(apiUrl, function(data){
 		if(data.stat=="ok"){
@@ -72,7 +72,7 @@ function step1_getMoreInfoNewPhoto(){
 //	url_download
 function step2_getUrlValidMediumSize(){
 	console.log("STEP 3 GET URL VALID MEDIUM SIZE.");
-	var apiUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=xxx&photo_id=" + _id + "&format=json&jsoncallback=?";
+	var apiUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=c8c95356e465b8d7398ff2847152740e&photo_id=" + _id + "&format=json&jsoncallback=?";
     //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
 	$.getJSON(apiUrl, function(data){
 		if(data.stat=="ok"){
@@ -87,14 +87,20 @@ function step2_getUrlValidMediumSize(){
 
 function step3_insertRowInDynamodbAWS(){
 	console.log("STEP 3 INSERT ROW IN DYNAMODB AWS with _id:"+_id);
-	AWS.config.update({
+	/*AWS.config.update({
 	  region: "us-east-2",
 	  // The endpoint should point to the local or remote computer where DynamoDB (downloadable) is running.
 	  endpoint: "https://dynamodb.us-east-2.amazonaws.com/DATA_IMAGE_SANTIAGO",		  
 	  //  accessKeyId and secretAccessKey defaults can be used while using the downloadable version of DynamoDB. 
 	  //  For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.		  
-	  accessKeyId: "xxx",
-	  secretAccessKey: "xxx/xxx"
+	  accessKeyId: "xxxxx",
+	  secretAccessKey: "xxxx/xxxx"
+	});*/
+
+	// Initialize the Amazon Cognito credentials provider
+	AWS.config.region = 'us-east-2'; // Region
+	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	    IdentityPoolId: 'us-east-2:52af5317-5a6d-40d9-bb97-f418d9be2fae',
 	});
 
 	var docClient = new AWS.DynamoDB.DocumentClient();
@@ -155,15 +161,15 @@ function step4_showInMapAndDownloadFileToGoogleVision(){
         (window.URL || window.webkitURL).revokeObjectURL(save.href);
     };
     reader.readAsDataURL(textoblob);	
-	/*
-	var filepath ="/Users/rojorubi/Documents/descarga.jpeg";
-
-	var contenidofile = "{'requests':[{'image':{'source':{'"+url_download+"'}},'features':[{'type':'LANDMARK_DETECTION','maxResults':1},{'type':'WEB_DETECTION','maxResults':3}]}]}";
-	AWS.config.update({
-	  region: "us-east-2",
-	  accessKeyId: "XXX",
-	  secretAccessKey: "XXX"
+	
+	
+	step5_uploadPhotoToS3Blob(url_download, _id+".jpeg");
+	// Initialize the Amazon Cognito credentials provider
+	/*AWS.config.region = 'us-east-2'; // Region
+	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	    IdentityPoolId: 'us-east-2:52af5317-5a6d-40d9-bb97-f418d9be2fae',
 	});
+
 	var albumBucketName = "requestgooglecloud2";
 	var s3 = new AWS.S3({
 	  apiVersion: '2006-03-01',
@@ -179,8 +185,134 @@ function step4_showInMapAndDownloadFileToGoogleVision(){
 	      return alert('There was an error uploading your photo: ', err.message);
 	    }
 	    alert('Successfully uploaded file in S3.');
+	  });*/
+	
+}
+
+function analyze_data(blob, fileName){
+    var myReader = new FileReader();
+    myReader.readAsArrayBuffer(blob);
+
+    // Initialize the Amazon Cognito credentials provider
+	AWS.config.region = 'us-east-2'; // Region
+	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	    IdentityPoolId: 'us-east-2:52af5317-5a6d-40d9-bb97-f418d9be2fae',
+	});
+
+	var albumBucketName = "imagesflickr";
+	var s3 = new AWS.S3({
+	  apiVersion: '2006-03-01',
+	  params: {Bucket: albumBucketName}
+	});
+    
+    myReader.addEventListener("loadend", function(e)
+    {
+        var buffer = e.srcElement.result;//arraybuffer object
+        s3.upload({
+		    Key: fileName,
+		    Body: buffer,
+		    ACL: 'public-read'
+		  }, function(err, data) {
+		    if (err) {
+		      return alert('There was an error uploading your photo: ', err.message);
+		    }
+		    //alert('Successfully uploaded file IMAGE in S3.');
+		    console.log("Successfully uploaded file IMAGE in S3.");
+		    step6_createRequestToGoogleWithImageUrlFromS3(fileName);
+		  });
+    });
+}
+
+
+function step5_uploadPhotoToS3Blob(url, fileName){
+	var xhr = new XMLHttpRequest(); 
+	xhr.open("GET", url); 
+	//although we can get the remote data directly into an arraybuffer using the string "arraybuffer" assigned to responseType property. For the sake of example we are putting it into a blob and then copying the blob data into an arraybuffer.
+	xhr.responseType = "blob";
+
+	xhr.onload = function() 
+	{
+	    analyze_data(xhr.response, fileName);
+	}
+	xhr.send();
+}
+
+function step5_uploadPhotoToS3(url, fileName){
+	console.log("STEP 5 UPLOAD IMAGE TO S3.");
+
+    // Initialize the Amazon Cognito credentials provider
+	AWS.config.region = 'us-east-2'; // Region
+	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	    IdentityPoolId: 'us-east-2:52af5317-5a6d-40d9-bb97-f418d9be2fae',
+	});
+
+	var albumBucketName = "imagesflickr";
+	var s3 = new AWS.S3({
+	  apiVersion: '2006-03-01',
+	  params: {Bucket: albumBucketName}
+	});
+	
+	$.ajax
+	({
+	  type: "POST",
+	  url: url,
+	  dataType: "image/jpeg",
+	  success: function(html)
+	  {  
+	  	  var base64EncodedStr = hexToBase64(html);
+	  	  i = new Image();
+	      i.src = html;
+	      //$(this).append(i);
+
+		  s3.upload({
+		    Key: fileName,
+		    Body: i,
+		    ACL: 'public-read'
+		  }, function(err, data) {
+		    if (err) {
+		      return alert('There was an error uploading your photo: ', err.message);
+		    }
+		    //alert('Successfully uploaded file IMAGE in S3.');
+		    console.log("Successfully uploaded file IMAGE in S3.");
+		    step6_createRequestToGoogleWithImageUrlFromS3(fileName);
+		  });
+	  }
+	});
+
+}
+
+function hexToBase64(str) {
+    return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+}
+
+function step6_createRequestToGoogleWithImageUrlFromS3(fileName){
+	console.log("STEP 6 SEND FILE REQUEST TO GOOGLE AND GET CLASIFICATION FOR THE IMAGE.");
+
+	var contenidofile = '{"requests":[{"image":{"source": {"imageUri":"https://s3.eu-west-3.amazonaws.com/imagesflickr/'+fileName+'"}},"features":[{"type":"LANDMARK_DETECTION","maxResults":1},{"type":"WEB_DETECTION","maxResults":3}]}]}';
+
+	AWS.config.region = 'us-east-2'; // Region
+	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	    IdentityPoolId: 'us-east-2:52af5317-5a6d-40d9-bb97-f418d9be2fae',
+	});
+
+	var albumBucketName = "requestgooglecloud2";
+	var s3 = new AWS.S3({
+	  apiVersion: '2006-03-01',
+	  params: {Bucket: albumBucketName}
+	});
+	var photoKey = _id+".json";
+	  s3.upload({
+	    Key: photoKey,
+	    Body: contenidofile,
+	    ACL: 'public-read'
+	  }, function(err, data) {
+	    if (err) {
+	      return alert('There was an error uploading your file: ', err.message);
+	    }
+	    //alert('Successfully uploaded file GOOGLE REQUEST in S3.');
+	    console.log("Successfully uploaded file GOOGLE REQUEST in S3.");
+	    console.log("END.");
 	  });
-	*/
 }
 
 function randomString(length) {

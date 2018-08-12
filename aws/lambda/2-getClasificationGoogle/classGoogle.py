@@ -42,6 +42,6 @@ def lambda_handler(event, context):
     print "idphoto:",idphoto
     payload_json_s3 = boto3.resource('s3').Object(bucket_name, key_path).get()['Body'].read() # Retrieve the S3 Object
     print "body from s3 json:",payload_json_s3
-    url_process_lead = 'https://vision.googleapis.com/v1/images:annotate?key=xxx'
+    url_process_lead = 'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBAkCyuOZpyerrB-d2Fo4dm2Egw8dFm_SM'
     payload_json=json.dumps(json.loads(payload_json_s3))
     callingToGoogle(idphoto, url_process_lead, payload_json)

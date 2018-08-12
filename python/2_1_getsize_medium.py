@@ -4,8 +4,8 @@ import flickrapi
 import json
 from pprint import pprint
 
-api_key = 'xxx'
-secret_api_key = 'xxx'
+api_key = 'f62de8ac68739905531c8378bfd4086b'
+secret_api_key = '520216bfefa4089f'
 photo_id = '8466235318'
 
 flickr = flickrapi.FlickrAPI(api_key, secret_api_key)

@@ -79,7 +79,7 @@
     
 
 	<script type="text/javascript">
-		AWS.config.update({
+		/*AWS.config.update({
 		  region: "us-east-2",
 		  // The endpoint should point to the local or remote computer where DynamoDB (downloadable) is running.
 		  endpoint: "https://dynamodb.us-east-2.amazonaws.com/DATA_IMAGE_SANTIAGO",		  
@@ -87,11 +87,13 @@
 		  //  For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.		  
 		  accessKeyId: "xxx",
 		  secretAccessKey: "xx/xxx"
-		});
+		});*/
 
-		//var AWS = require('aws-sdk');
-		// Set the region 
-		//AWS.config.update({region: 'us-east-2'});
+		// Initialize the Amazon Cognito credentials provider
+		AWS.config.region = 'us-east-2'; // Region
+		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+		    IdentityPoolId: 'us-east-2:52af5317-5a6d-40d9-bb97-f418d9be2fae',
+		});
 
 		// Create DynamoDB service object
 		var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
@@ -241,6 +243,8 @@
 	         <li><a href="https://s3.us-east-2.amazonaws.com/ucmap/videos.html" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-camera-retro white"></i>&nbsp;&nbsp;Videos</a></li>
 
 	         <li><form class="formnewphoto" onsubmit="step0_checkIfIdPhotoHasLocation();return false;/*30374608856*/"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class=""><input id="newphoto" type="text" placeholder="idNewPhoto" class="form-control2"></i></a></form></li>
+
+	         <li><a href="https://s3.us-east-2.amazonaws.com/ucmap/flickrApiSearch.html" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-camera-retro white"></i>&nbsp;&nbsp;Search a new ID</a></li>
 
            <!--<li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;Tags List</a></li>-->
           </ul>
@@ -477,7 +481,7 @@
         	for(var pagenum=1; pagenum<=30; pagenum++) {
 	            var opts = {
 	                method: 'flickr.photos.search',
-	                api_key: 'f62de8ac68739905531c8378bfd4086b',
+	                api_key: 'xxxx',
 	                //sort: 'relevance',
 	                content_type: 1, //only photos
 	                has_geo: 1,
