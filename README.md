@@ -11,6 +11,20 @@ Hacer crecer un análisis espacial, utilizando un SIG, con las temáticas identi
   
 **Partimos de un shape file con 2500 fotografías geolocalizadas principalmente en la zona concretamente en la provincia de Logroño.**
 
+
+
+**Accesos directos por url a las funcionalidades desarrolladas en el proyecto.**
+Repositorio de código:
+https://github.com/rojorubi/ucm.sig.santiagomap
+Página principal:
+https://s3.us-east-2.amazonaws.com/ucmap/index.html
+Videos:
+https://s3.us-east-2.amazonaws.com/ucmap/videos.html
+Mapa 3d:
+https://s3.us-east-2.amazonaws.com/ucmap/3dmapExample.html#5/42.43/-2.96/-17.6/45
+
+
+
 # Localización principal de la imágenes utilizadas
 
 **![](https://lh5.googleusercontent.com/68rVeBHF_UpZ8370gT6qdrUeqEartfAv_O_tp191BohGDX8sxCGq-B8XPte0oEIrORLnD7TKDQzH1_M5FiJ7C4V3g39zELcx75YR7SRJnG21BFicx9R2x0AJkAgoMDoohU5yiHfm5ew)**
