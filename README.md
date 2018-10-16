@@ -16,10 +16,13 @@ Hacer crecer un análisis espacial, utilizando un SIG, con las temáticas identi
 **Accesos directos por url a las funcionalidades desarrolladas en el proyecto.**
 Repositorio de código:
 https://github.com/rojorubi/ucm.sig.santiagomap
+
 Página principal:
 https://s3.us-east-2.amazonaws.com/ucmap/index.html
+
 Videos:
 https://s3.us-east-2.amazonaws.com/ucmap/videos.html
+
 Mapa 3d:
 https://s3.us-east-2.amazonaws.com/ucmap/3dmapExample.html#5/42.43/-2.96/-17.6/45
 
